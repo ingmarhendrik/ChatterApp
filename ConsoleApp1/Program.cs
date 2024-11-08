@@ -13,6 +13,8 @@ namespace ChatServer
             _users = new List<Client>();
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
             _listener.Start();
+            Console.WriteLine("Server started...");
+
             while (true)
             {
                 var client = new Client(_listener.AcceptTcpClient());
@@ -39,6 +41,7 @@ namespace ChatServer
 
         public static void BroadcastMessage(string message)
         {
+            Console.WriteLine("Broadcasting message" + message);
             foreach (var user in _users)
             {
                 var msgPacket = new PacketBuilder();
@@ -50,17 +53,22 @@ namespace ChatServer
         }
         public static void BroadcastDisconnect(string uid)
         {
-            var disconnecteUser = _users.FirstOrDefault(x => x.UID.ToString() == uid);
-            _users.Remove(disconnecteUser);
-            foreach (var user in _users)
+            var disconnectedUser = _users.FirstOrDefault(x => x.UID.ToString() == uid);
+            if (disconnectedUser != null)
             {
-                var broadcastPacket = new PacketBuilder();
-                broadcastPacket.WriteOpCode(10);
-                broadcastPacket.WriteMessage(uid);
-                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                _users.Remove(disconnectedUser);
+                Console.WriteLine($"{disconnectedUser.Username} has disconnected.");
 
+                foreach (var user in _users)
+                {
+                    var broadcastPacket = new PacketBuilder();
+                    broadcastPacket.WriteOpCode(10);
+                    broadcastPacket.WriteMessage(uid);
+                    user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+
+                }
+                BroadcastMessage($"[{disconnectedUser.Username}] Disconnected!");
             }
-            BroadcastMessage($"[{disconnecteUser.Username}] Disconnected!");
         }
     }
 }

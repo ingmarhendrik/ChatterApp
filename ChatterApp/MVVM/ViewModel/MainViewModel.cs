@@ -3,47 +3,56 @@ using ChatClient.MVVM.Model;
 using ChatClient.Net;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Interop;
 
 
 namespace ChatClient.MVVM.ViewModel
 {
-    class MainViewModel
+    public class MainViewModel
     {
-        public ObservableCollection<UserModel> Users { get; set; }
-        public ObservableCollection<string> Messages { get; set; }
-
-        public RelayCommand ConnectToServerCommand { get; set; }
-        public RelayCommand SendMessageCommand { get; set; }
-
-        public string Username { get; set; }
-        public string Message { get; set; }
+        public List<UserModel> Users { get; set; } = new List<UserModel>();
+        public List<string> Messages { get; set; } = new List<string>();
 
         private Server _server;
+
         public MainViewModel()
         {
-            Users = new ObservableCollection<UserModel>();
-            Messages = new ObservableCollection<string>();
-
             _server = new Server();
             _server.connectedEvent += UserConnected;
             _server.msgReceivedEvent += MessageReceived;
             _server.userDisconnectEvent += RemoveUser;
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(Username), o => !string.IsNullOrEmpty(Username));
 
-            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
+        }
+
+        public void ConnectToServer(string username)
+        {
+            _server.ConnectToServer(username);
+        }
+
+        public void SendMessage(string message)
+        {
+            _server.SendMessageToServer(message);
         }
 
         private void RemoveUser()
         {
             var uid = _server.PacketReader.ReadMessage();
             var user = Users.FirstOrDefault(x => x.UID == uid);
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user));
+            if (user != null)
+            {
+                Users.Remove(user);
+                Console.WriteLine($"{user.Username} has disconnected.");
+            }
         }
 
         private void MessageReceived()
         {
             var msg = _server.PacketReader.ReadMessage();
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));
+            Messages.Add(msg);
+            Console.WriteLine(msg);
         }
 
         private void UserConnected()
@@ -53,9 +62,10 @@ namespace ChatClient.MVVM.ViewModel
                 Username = _server.PacketReader.ReadMessage(),
                 UID = _server.PacketReader.ReadMessage(),
             };
-            if (!Users.Any(x => x.UID == user.UID))
+            if (!Users.Exists(x => x.UID == user.UID))
             {
-                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
+                Users.Add(user);
+                Console.WriteLine($"{user.Username} has connected.");
             }
         }
     }

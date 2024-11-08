@@ -35,7 +35,7 @@ namespace ChatClient.Net
                     connectPacket.WriteMessage(username);
                     _client.Client.Send(connectPacket.GetPacketBytes());
                 }
-                 
+                Console.WriteLine("Connected to the server as " + username);
             }
         }
 
