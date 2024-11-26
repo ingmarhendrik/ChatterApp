@@ -1,6 +1,4 @@
-﻿using ChatClient.MVVM.ViewModel;
-
-namespace ConsoleChatApp
+﻿namespace ConsoleChatApp
 {
     class Program
     {
@@ -15,7 +13,9 @@ namespace ConsoleChatApp
 
             while (true)
             {
-                var message = Console.ReadLine();
+                var message = Console.ReadLine() ?? string.Empty;
+                if (message.Trim().Length == 0) continue;
+
                 if (message.ToLower() == "/exit")
                 {
                     break;

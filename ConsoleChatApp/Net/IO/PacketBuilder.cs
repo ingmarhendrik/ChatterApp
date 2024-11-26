@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace ChatClient.Net.IO;
+namespace ConsoleChatApp.Net.IO;
 
 public class PacketBuilder
 {

@@ -1,0 +1,11 @@
+services:
+  client:
+    depends_on:
+      - server
+    build: 
+      context: ./ConsoleChatApp
+      dockerfile: Dockerfile
+  server:
+    ports:
+      - "7891:7891"
+    build: ConsoleApp1

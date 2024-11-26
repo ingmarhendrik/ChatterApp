@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatClient.MVVM.Model
+namespace ConsoleChatApp.Model
 {
     public class UserModel
     {

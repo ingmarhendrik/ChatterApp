@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ChatClient.MVVM.Core
+namespace ConsoleChatApp.Core
 {
     class RelayCommand : ICommand
     {
@@ -16,8 +16,27 @@ namespace ChatClient.MVVM.Core
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove {  CommandManager.RequerySuggested -= value; }
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler? ICommand.CanExecuteChanged
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+
+            remove
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public bool CanExecute(object parameter)
@@ -28,6 +47,16 @@ namespace ChatClient.MVVM.Core
         public void Execute(object parameter)
         {
             this.execute(parameter);
+        }
+
+        bool ICommand.CanExecute(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICommand.Execute(object? parameter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,12 +1,7 @@
-﻿using ChatClient.Net.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ConsoleChatApp.Net.IO;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChatClient.Net
+namespace ConsoleChatApp.Net
 {
     class Server
     {
@@ -24,7 +19,7 @@ namespace ChatClient.Net
         {
             if (!_client.Connected)
             {
-                _client.Connect("127.0.0.1", 7891);
+                _client.Connect("server", 7891);
                 PacketReader = new PacketReader(_client.GetStream());
 
                 ReadPackets();

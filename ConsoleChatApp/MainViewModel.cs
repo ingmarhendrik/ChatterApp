@@ -1,15 +1,8 @@
-﻿using ChatClient.MVVM.Core;
-using ChatClient.MVVM.Model;
-using ChatClient.Net;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Interop;
+﻿using ConsoleChatApp.Model;
+using ConsoleChatApp.Net;
 
 
-namespace ChatClient.MVVM.ViewModel
+namespace ConsoleChatApp
 {
     public class MainViewModel
     {

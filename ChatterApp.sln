@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatClient", "ChatterApp\Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatServer", "ConsoleApp1\ChatServer.csproj", "{BE2131C2-0DB9-4A0F-A42C-C711B3FBCD24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleChatApp", "ConsoleChatApp\ConsoleChatApp.csproj", "{2FD7278A-BF5D-44A9-8E75-E1EF466E758A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleChatApp", "ConsoleChatApp\ConsoleChatApp.csproj", "{2FD7278A-BF5D-44A9-8E75-E1EF466E758A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB5A7DC3-B97E-4B22-BE4D-990C90D44A31}"
+	ProjectSection(SolutionItems) = preProject
+		DockerCompose.yml = DockerCompose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
